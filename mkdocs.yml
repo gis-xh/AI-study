@@ -50,8 +50,7 @@ extra:
   
 
 # [Navigtion] 导航栏
-nav:
-  - 主页: index.md
+# nav:
 
 
 # [Extensions] 扩展
