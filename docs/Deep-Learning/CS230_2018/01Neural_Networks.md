@@ -231,11 +231,11 @@ $$
 对于逻辑回归，相关公式如下：
 
 $$
-\begin{flalign}
+\begin{align*}
 &z = w^T x + b \\\\
 &\hat{y} = a = \sigma(z) = \frac{1}{1 + e^{-z}} \\\\
 &L(a, y) = -(y \ln^{(a)} + (1 - y) \ln^{(1 - a)})
-\end{flalign}
+\end{align*}
 $$
 
 - 对于单一样本前向传播计算损失函数。
