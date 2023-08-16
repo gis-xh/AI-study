@@ -142,11 +142,11 @@ $$
 给定一个训练数据集 $\{(x^{(1)}, y^{(1)}), \cdots, (x^{(m)}, y^{(m)})\}$，想要得到 $y^{(i)}\approx \hat{y}^{(i)}$ 的结果。
 
 $$
-\begin{align}
+\begin{align*}
 \hat{y}^{(i)}&=P(y=1|\ x^{(i)}) \\\\
 &=\sigma(z^{(i)})=\frac{1}{1+e^{-z^{(i)}}} \\\\
 &=\sigma(w^T x^{(i)}+b)
-\end{align}
+\end{align*}
 $$
 
 - $\hat{y}$：预测图片是猫的图片的概率
@@ -169,10 +169,10 @@ $$
 代价函数是整个训练集损失函数的平均值，是针对整个训练样例定义的函数，用于衡量在整个训练集上的表现。是一个凸函数 (convex function)，能够找到最低点，得到局部最优解 (local optima)。
 
 $$
-\begin{align}
+\begin{align*}
 J(w,b)&=\frac{1}{m}\sum_{i=1}^{m}loss(\hat{y}^{(i)}, y^{(i)}) \\\\
 &=-\frac{1}{m}\sum_{i=1}^{m}[y^{(i)} \ln^{\hat{y}^{(i)}}+(1-y^{(i)}) \ln^{(1-\hat{y}^{(i)})}]
-\end{align}
+\end{align*}
 $$
 
 ### 2.3 Gradient Descent 梯度下降算法
@@ -247,22 +247,22 @@ $$
 - 若计算损失函数关于 z 的导数，需要通过后向传播（链式法则）计算导数
 
 $$
-\begin{align}
+\begin{align*}
 \frac{dL(a,y)}{dz}
 =\frac{dL(a,y)}{da}\cdot\frac{da}{dz} 
 =\frac{a-y}{a(1-a)}\cdot a(1-a)
 =a-y
-\end{align}
+\end{align*}
 $$
 
 #### 2.5.2 整体样本的成本函数
 
 $$
-\begin{align}
+\begin{align*}
 J(w,b)&=\frac{1}{m}\sum_{i=1}^{m}L(a^{(i)}, y^{(i)}) \\\\
 dw_1=\frac{\partial {J(w,b)}}{\partial w_1}&=\frac{1}{m}\sum_{i=1}^{m}\frac{\partial}{\partial w_1}L(a^{(i)}, y^{(i)}) \\\\
 &=\frac{1}{m}\sum_{i=1}^{m}dw_{1}^{(i)}
-\end{align}
+\end{align*}
 $$
 
 ### 2.6 Vectorization 向量化
@@ -305,10 +305,10 @@ $$
 3、将公式 $z=w^Tx+b$，变成如下形式：
 
 $$
-\begin{align}
+\begin{align*}
 Z&=[z^{(1)}, z^{(2)}, \cdots, z^{(m)}]=w^TX+[b,b,\cdots,b] \\\\
 &=[w^Tx^{(1)}+b, w^Tx^{(2)}+b,\cdots,w^Tx^{(m)}+b]
-\end{align}
+\end{align*}
 $$
 
 - 在 Numpy 中对应代码 `Z = np.dot(wT, x) + b`
@@ -324,11 +324,11 @@ $$
 1、将单个样本的梯度值 $dz^{(1)}=a^{(1)}-y^{(1)}$ 组合成向量 $dZ$
 
 $$
-\begin{align}
+\begin{align*}
 dZ&=[dz^{(1)},dz^{(2)},\cdots,dz^{(m)}] \\\\
 &=A-Y
 =[a^{(1)}-y^{(1)},a^{(2)}-y^{(2)},\cdots,a^{(m)}-y^{(m)}]
-\end{align}
+\end{align*}
 $$
 
 2、关于 $b$ 的求导 $db$，可以表示为：
@@ -585,19 +585,19 @@ $$
 1、通过向量化运算，得出隐藏层 $a^{[1]}$ 里四个逻辑回归的输出
 
 $$
-\begin{align}
+\begin{align*}
 z^{[1]}&=W^{[1]}x+b^{[1]}=W^{[1]}a^{[0]}+b^{[1]}\\\\
 a^{[1]}&=\sigma(z^{[1]})
-\end{align}
+\end{align*}
 $$
 
 2、用 $a^{[1]}$ 的四个输出作为 $a^{[2]}$ 层的输入
 
 $$
-\begin{align}
+\begin{align*}
 z^{[2]}&=W^{[1]}a^{[0]}+b^{[1]}\\\\
 a^{[2]}&=\sigma(z^{[2]})=\hat{y}
-\end{align}
+\end{align*}
 $$
 
 #### 3.2.2 多样本向量化
@@ -616,37 +616,41 @@ X=\begin{bmatrix}
   |&  |&  |&  |\\
   x^{(1)}&  x^{(2)}&  \cdots&  x^{(m)}\\
   |&  |&  |&  |
-\end{bmatrix},\ X\in \mathbb{R}^{(n_x, m)}
+\end{bmatrix},\ X\in \mathbb{R}^{(n_x,\ m)}
 $$
 
 **2、第一层（隐藏层）**
 
 $$
-Z^{[1]}=W^{[1]}X+b^{[1]}=\begin{bmatrix}
+\begin{align*}
+Z^{[1]}&=W^{[1]}X+b^{[1]}=\begin{bmatrix}
   |&  |&  |&  |\\
   Z^{[1](1)}&  Z^{[1](2)}&  \cdots&  Z^{[1](m)}\\
   |&  |&  |&  |
-\end{bmatrix},\ Z^{[1]}\in \mathbb{R}^{(n_x, m)}\\\\
-A^{[1]}=\sigma(Z^{[1]})=\begin{bmatrix}
+\end{bmatrix},\ Z^{[1]}\in \mathbb{R}^{(n_x,\ m)}\\\\
+A^{[1]}&=\sigma(Z^{[1]})=\begin{bmatrix}
   |&  |&  |&  |\\
   a^{[1](1)}&  a^{[1](2)}&  \cdots&  a^{[1](m)}\\
   |&  |&  |&  |
-\end{bmatrix},\ A^{[1]}\in \mathbb{R}^{(n_x, m)}
+\end{bmatrix},\ A^{[1]}\in \mathbb{R}^{(n_x,\ m)}
+\end{align*}
 $$
 
 **3、第二层（输出层）**
 
 $$
-Z^{[2]}=W^{[2]}A^{[1]}+b^{[2]}=\begin{bmatrix}
+\begin{align*}
+Z^{[2]}&=W^{[2]}A^{[1]}+b^{[2]}=\begin{bmatrix}
   |&  |&  |&  |\\
   Z^{[2](1)}&  Z^{[2](2)}&  \cdots&  Z^{[2](m)}\\
   |&  |&  |&  |
-\end{bmatrix},\ Z^{[2]}\in \mathbb{R}^{(n_x, m)}\\\\
-A^{[2]}=\sigma(Z^{[2]})=\begin{bmatrix}
+\end{bmatrix},\ Z^{[2]}\in \mathbb{R}^{(n_x,\ m)}\\\\
+A^{[2]}&=\sigma(Z^{[2]})=\begin{bmatrix}
   |&  |&  |&  |\\
   a^{[2](1)}&  a^{[2](2)}&  \cdots&  a^{[2](m)}\\
   |&  |&  |&  |
-\end{bmatrix},\ A^{[2]}\in \mathbb{R}^{(n_x, m)}
+\end{bmatrix},\ A^{[2]}\in \mathbb{R}^{(n_x,\ m)}
+\end{align*}
 $$
 
 #### 3.2.4 向量化证明
@@ -685,11 +689,11 @@ $$
 **2、sigma 函数在 z 点上的导数（斜率）**
 
 $$
-\begin{align}
+\begin{align*}
 g'(z)=\frac{d}{dz}g(z)&=\frac{1}{1+e^{-z}}(1-\frac{1}{1+e^{-z}})\\\\
 &=g(z)[1-g(z)]\\\\
 &=a(1-a)
-\end{align}
+\end{align*}
 $$
 
 ![image-20230802203836947](./img/image-20230802203836947.png)
@@ -709,11 +713,11 @@ $$
 **2、$\tanh(z)$ 函数在 z 点上的导数（斜率）**
 
 $$
-\begin{align}
+\begin{align*}
 g'(z)=\frac{d}{dz}g(z)&=1-[\tanh(z)]^2\\\\
 &=1-g(z)^2\\\\
 &=1-a^2
-\end{align}
+\end{align*}
 $$
 
 ![image-20230802204050789](./img/image-20230802204050789.png)
@@ -737,14 +741,14 @@ $$
 - $z<0$，斜率为负
 
 $$
-\begin{align}
+\begin{align*}
 g'(z)=\frac{d}{dz}g(z)&=
 \left\{\begin{matrix}
 0 & ,if\ z<0 \\
 1 & ,if\ z>0 \\
 undefine & ,if\ z=0
 \end{matrix}\right.
-\end{align}
+\end{align*}
 $$
 
 ![image-20230802204136339](./img/image-20230802204136339.png)
@@ -764,14 +768,14 @@ $$
 **2、Leaky ReLU 函数在 z 点上的导数（斜率）**
 
 $$
-\begin{align}
+\begin{align*}
 g'(z)=\frac{d}{dz}g(z)&=
 \left\{\begin{matrix}
 0.01 & ,if\ z<0 \\
 1 & ,if\ z>0 \\
 undefine & ,if\ z=0
 \end{matrix}\right.
-\end{align}
+\end{align*}
 $$
 
 ![image-20230802204204632](./img/image-20230802204204632.png)
@@ -795,36 +799,36 @@ $$
 #### 3.4.1 单个样本的梯度计算
 
 $$
-\begin{align}
+\begin{align*}
 &dz^{[2]}=a^{[2]}-y\\\\
 &dW^{[2]}=dz^{[2]}{a^{[1]}}^T\\\\
 &db^{[2]}=dz^{[2]}\\\\
 &dz^{[1]}={W^{[2]}}^Tdz^{[2]}*g'^{[1]}(z^{[1]})\\\\
 &dW^{[1]}=dz^{[1]}x^T\\\\
 &db^{[1]}=dz^{[1]}
-\end{align}
+\end{align*}
 $$
 
 #### 3.4.2 多样本梯度计算
 
 $$
-\begin{align}
+\begin{align*}
 &dZ^{[2]}=A^{[2]}-Y\\\\
 &dW^{[2]}=\frac{1}{m}dZ^{[2]}{A^{[1]}}^T\\\\
 &db^{[2]}=\frac{1}{m}np.sum(dz^{[2]},\ axis=1,\ keepdims=True)\\\\
 &dZ^{[1]}={W^{[2]}}^TdZ^{[2]}*g'^{[1]}(Z^{[1]})\\\\
 &dW^{[1]}=\frac{1}{m}dZ^{[1]}X^T\\\\
 &db^{[1]}=\frac{1}{m}np.sum(dz^{[1]},\ axis=1,\ keepdims=True)
-\end{align}
+\end{align*}
 $$
 
 #### 3.4.3 学习率控制梯度下降
 
 $$
-\begin{align}
+\begin{align*}
 W&=W-\alpha dW^{[1]}\\\\
 b&=b-\alpha db^{[1]}
-\end{align}
+\end{align*}
 $$
 
 ### 3.5 随机初始化权重
@@ -832,10 +836,10 @@ $$
 在逻辑回归的问题中，把权重参数初始化为零是可行的。但把神经网络的权重参数全部初始化为零，并使用梯度下降，将无法获得预期的效果，所以需要对权重进行随机初始化。
 
 $$
-\begin{align}
+\begin{align*}
 W^{[1]}&=np.random.randn((m,n))*0.01\\\\
 b^{[1]}&=np.zero((m,n))
-\end{align}
+\end{align*}
 $$
 
 **1、随机初始化权重**：将权重 W 初始化为 $(m,n)$ 的高斯分布随机变量
@@ -863,14 +867,15 @@ $$
 <center>图 4.1 深层神经网络结构图</center>
 
 1、对于网络的第一层隐藏层：
+
 $$
-\begin{align}
+\begin{align*}
 z^{[1]}&=w^{[1]}\cdot x+b^{[1]}\\\\\
 a^{[1]}&=g^{[1]}(z^{[1]})
-\end{align}
+\end{align*}
 $$
 
-- $ w^{[1]}\in \mathbb{R}^{3\times 2}$，维度为 $(n^{[1]},\ n^{[0]})$
+- $w^{[1]}\in \mathbb{R}^{3\times 2}$，维度为 $(n^{[1]},\ n^{[0]})$
 - $x\in \mathbb{R}^{2\times 1}$，维度为 $(n^{[0]},\ 1)$
 - $b^{[1]},\ z^{[1]},\ a^{[1]} \in \mathbb{R}^{3\times 1}$，维度都是 $(n^{[1]},\ 1)$
 
